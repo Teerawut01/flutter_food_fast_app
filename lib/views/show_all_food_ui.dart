@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_food_fast_app/models/food_list.dart';
-import 'package:flutter_food_fast_app/models/food_list.dart';
+import 'package:flutter_food_fast_app/views/show_detail_food_ui.dart';
 
 class ShowAllFoodUi extends StatefulWidget {
   const ShowAllFoodUi({super.key});
@@ -10,7 +10,7 @@ class ShowAllFoodUi extends StatefulWidget {
 }
 
 class _ShowAllFoodUiState extends State<ShowAllFoodUi> {
-  // ตัวแปรเก็บข้อมูลร้านอาหาร
+// ตัวแปรเก็บข้อมูลร้านอาหาร
   List<FoodList> foodList = [
     FoodList(
       name: 'Chesters Grill',
@@ -172,57 +172,66 @@ class _ShowAllFoodUiState extends State<ShowAllFoodUi> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: const Text(
-          "สายด่วนชวนชิม",
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          'สายด่วนชวนชิม',
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Image.asset(
-            'assets/images/fastfood.png',
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.25,
-            fit: BoxFit.cover,
-          ),
-          const SizedBox(height: 20),
-          Expanded(
-            child: ListView.separated(
-              itemCount: foodList.length,
-              separatorBuilder: (context, index) => const Divider(),
-              itemBuilder: (context, index) => ListTile(
-                onTap: () {
-                  // ตรงนี้คุณสามารถทำ Navigator.push ไปหน้า Detail ได้
-                },
-                leading: Image.asset(
-                  'assets/images/${foodList[index].image}',
-                  width: 50,
-                  height: 50,
-                  fit: BoxFit.cover,
-                ),
-                title: Text(
-                  foodList[index].name, // ✅ ใช้ foodList
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                subtitle: Text(foodList[index].phone), // ✅ ใช้ foodList
-                trailing: const Icon(
-                  Icons.info,
-                  color: Colors.green,
+      body: Center(
+        child: Column(
+          children: [
+            Image.asset(
+              'assets/images/fastfood.png',
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.25,
+              fit: BoxFit.cover,
+            ),
+            SizedBox(height: 20),
+            Expanded(
+              child: ListView.separated(
+                itemCount: foodList.length, // จํานวนรายการ
+                separatorBuilder: (context, index) =>
+                    Divider(), // ส่วนแบ่งรายการ
+                itemBuilder: (context, index) => ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ShowDetailFoodUi(
+                          foodList: foodList[index],
+                        ),
+                      ),
+                    );
+                  },
+                  leading: Image.asset(
+                    'assets/images/${foodList[index].image}',
+                  ),
+                  title: Text(
+                    foodList[index].name!,
+                  ),
+                  subtitle: Text(
+                    foodList[index].phone!,
+                  ),
+                  trailing: Icon(
+                    Icons.info,
+                    color: Colors.green,
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 20),
-          const Text(
-            'สายด่วนชวนชิม อย่าลืมโทรมานะจ๊ะ',
-            style: TextStyle(
-              color: Colors.red,
+            SizedBox(height: 10),
+            Text(
+              "หิวเมื่อไหร่ก็โทรน่ะจ๊ะ",
             ),
-          ),
-          const SizedBox(height: 20),
-        ],
+            SizedBox(height: 10),
+          ],
+        ),
       ),
     );
   }
 }
+
+// ................................................................
